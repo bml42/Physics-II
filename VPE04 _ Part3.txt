@@ -1,0 +1,45 @@
+from __future__ import division, print_function
+from visual import *
+scene.width = 1000
+scene.height = 700
+L = 0.8
+Q = 2e-9
+Nq = 3
+dx = L/Nq
+dQ = Q/Nq
+## source charges
+cylinder(pos=vector(-L/2,0,0), axis=vector(L,0,0), radius=0.013, opacity=0.2)
+sources = []
+x = -L/2 + dx/2
+while x < L/2:
+    a = sphere(pos=vector(x,0,0), radius=0.01, color=color.red, q=dQ)
+    sources.append(a)
+    x = x + dx
+scalefactor = 1e-4 ## you will need to change this
+oofpez = 9e9
+Ea = arrow(pos=vector(-0.3,0.05,0), axis=vector(0.1,0,0), color=color.orange, shaftwidth=0.01)
+Enet = vector(0,0,0)
+robs = Ea.pos
+for scharge in sources:
+    rate(2)
+    ## add code to calculate Enet
+    r = robs - scharge.pos
+    Enet = Enet + (oofpez * ( scharge.q / mag2(r)) * norm(r))
+    Ea.axis = Enet * scalefactor
+## set axis of the arrow to represent Enet, adjusting scalefactor appropriately
+
+theta = 0
+dtheta = pi/5
+x = -L/2
+dx = L/6
+R = 0.06
+obs = []
+while x < 1.1*L/2:
+## one ring
+    theta = 0
+    while theta < 2*pi:
+        a = arrow(pos=vector(x, R*cos(theta), R*sin(theta)), axis=vector(0.1,0,0),
+        color=color.orange, shaftwidth=0.01)
+        obs.append(a)
+        theta = theta + dtheta
+        x = x + dx ## go on to next ring

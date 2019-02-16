@@ -1,0 +1,24 @@
+##Benjamin Linam Hunter Paisley
+
+from __future__ import division, print_function
+from visual import *
+
+a1 = sphere(pos = vector(-2,-2,-2), color = color.green)
+a2 = sphere(pos = vector(-2,-2,2), color = color.green)
+a3 = sphere(pos = vector(-2,2,2), color = color.green)
+a4 = sphere(pos = vector(-2,2,-2), color = color.green)
+a5 = sphere(pos = vector(2,-2,-2), color = color.green)
+a6 = sphere(pos = vector(2,-2,2), color = color.green)
+a7 = sphere(pos = vector(2,2,2), color = color.green)
+a8 = sphere(pos = vector(2,2,-2), color = color.green)
+
+spheres = [a1, a2, a3, a4, a5, a6, a7, a8]
+
+
+i = 0
+
+while i < len(spheres):
+    rate(1)
+    spheres[i].color = color.magenta
+    i = i + 1
+

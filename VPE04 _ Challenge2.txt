@@ -1,0 +1,21 @@
+##Benjamin Linam Hunter Paisley
+
+from __future__ import division, print_function
+from visual import *
+
+arrz = []
+l = w = h = .008
+R = .1
+dtheta = pi/6
+theta = 0
+
+while theta < 2*pi:
+    rate(2)
+    a = box(pos = vector(R * cos(theta), R*sin(theta), 0), width = w, height = h, length = l, color = color.yellow)              
+    arrz.append(a)
+    a = box(pos = vector(0,R * cos(theta), R*sin(theta)), width = w, height = h, length = l, color = color.white)
+    arrz.append(a)
+    theta = theta + dtheta
+for thisbox in arrz:
+    rate(2)
+    thisbox.color = color.magenta

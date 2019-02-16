@@ -1,0 +1,114 @@
+##Benjamin Linam Hunter Paisley
+##xzy arrows
+
+from __future__ import division, print_function
+from visual import 
+scene.width = scene.height = 800
+## constants
+oofpez = 9e9 # stands for One Over Four Pi Epsilon-Zero
+qe = 1.6e-19
+s = 4e-11
+m = 1.67e-27
+p = vector(0,0,0)
+
+pos1 = vector(0,s2,0)
+
+pos2 = vector(0,-s2,0)
+
+scalefactor = 1.5e-20 # you may need to change this
+p1 = sphere(pos=pos1, radius=1e-11, color=color.red)
+q1 = qe
+p2 = sphere(pos=pos2, radius=1e-11, color=color.blue)
+q2 = -qe
+
+proton = sphere(pos = vector(-3s,0,0), radius = 1e-11, color = color.cyan, make_trail = True)
+
+obs = vector(-3e-10,0,0)
+thetamax = 2  pi
+dtheta = pi6
+R = 3e-10   ##radius of circle
+
+
+r1 = obs - vector(0, s2,0)
+r2 = obs - vector(0, -s2,0)
+
+rhat1 = norm(r1)
+rhat2 = norm(r2)
+
+theta = 0
+t = 0
+deltat = 4e-17
+
+
+r1 = proton.pos - pos1
+r2 = proton.pos - pos2
+    
+rhat1 = norm(r1)
+rhat2 = norm(r2)
+    
+E1 = (oofpez  q1  mag2(r1))  rhat1
+E2 = (oofpez  q2  mag2(r2))  rhat2
+Enet1 = E1 + E2
+
+F1 = q1  Enet1
+
+arrow(pos = proton.pos, axis = .00001  Enet1, color = color.orange)
+
+tmax = 1
+while theta  thetamax           ##found both xy and yz in the same loop
+    rate(500)
+    r_obs1 = R  vector(cos(theta), cos(pi2 - theta), 0)
+    r_obs2 = R  vector(0, cos(theta), cos(pi2 - theta))
+    r1 = r_obs1 - pos1
+    r2 = r_obs1 - pos2
+
+    r3 = r_obs2 - pos1
+    r4 = r_obs2 - pos2
+    
+    rhat1 = norm(r1)
+    rhat2 = norm(r2)
+
+    rhat3 = norm(r3)
+    rhat4 = norm(r4)
+    
+    E1 = (oofpez  q1  mag2(r1))  rhat1
+    E2 = (oofpez  q2  mag2(r2))  rhat2
+    Enet1 = E1 + E2
+
+    E3 = (oofpez  q1  mag2(r3))  rhat3
+    E4 = (oofpez  q2  mag2(r4))  rhat4
+    Enet2 = E3 + E4
+
+    
+    arrow(pos = r_obs1, axis = Enet1  scalefactor, color = color.orange)   ##xy
+    arrow(pos = r_obs2, axis = Enet2  scalefactor, color = color.orange)   ##yz
+    theta = theta + dtheta
+
+while t  tmax
+    rate(300)
+       
+    r1 = proton.pos - pos1
+    r2 = proton.pos - pos2
+    
+    rhat1 = norm(r1)
+    rhat2 = norm(r2)
+    
+    E1 = (oofpez  q1  mag2(r1))  rhat1
+    E2 = (oofpez  q2  mag2(r2))  rhat2
+    Enet1 = E1 + E2
+
+    F1 = q1  Enet1
+    
+    ##Fnet = F1 + F2
+
+    p = p + F1  deltat
+    
+    proton.pos = proton.pos + ((pm)  deltat)
+
+    ##mom.pos = proton.pos
+    ##mom.axis = .1  scalefactor  Enet1
+
+    
+    arrow(pos = proton.pos, axis = .00001  Enet1, color = color.orange)
+
+

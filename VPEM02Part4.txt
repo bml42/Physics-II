@@ -1,0 +1,74 @@
+##Benjamin Linam Hunter Paisley
+##XYZ Quad
+
+from __future__ import division, print_function
+from visual import *
+scene.width = scene.height = 800
+## constants
+oofpez = 9e9 # stands for One Over Four Pi Epsilon-Zero
+qe = 1.6e-19
+s = 4e-11
+
+pos1 = vector(s/2,s/2,0)
+pos2 = vector(-s/2,-s/2,0)
+pos3 = vector(s/2,-s/2,0)
+pos4 = vector(-s/2,s/2,0)
+
+scalefactor = 9e-20# you may need to change this
+p1 = sphere(pos=pos1, radius=1e-11, color=color.red)
+q1 = qe
+p2 = sphere(pos=pos2, radius=1e-11, color=color.red)
+q2 = qe
+p3 = sphere(pos=pos3, radius=1e-11, color=color.blue)
+q3 = -qe
+p4 = sphere(pos=pos4, radius=1e-11, color=color.blue)
+q4 = -qe
+obs = vector(-3e-10,0,0)
+thetamax = 2 * pi
+dtheta = pi/6
+R = 3e-10   ##radius of circle
+
+Enet = (0, 0, 0)
+
+theta = 0
+
+while theta < thetamax:     ##found both xy and yz in the same loop
+    rate(500)
+    r_obs1 = R * vector(cos(theta), cos(pi/2 - theta), 0)
+    r_obs2 = R * vector(0, cos(theta), cos(pi/2 - theta))
+    r1 = r_obs1 - pos1
+    r2 = r_obs1 - pos2
+    r3 = r_obs1 - pos3
+    r4 = r_obs1 - pos4
+
+    r5 = r_obs2 - pos1
+    r6 = r_obs2 - pos2
+    r7 = r_obs2 - pos3
+    r8 = r_obs2 - pos4
+
+    rhat1 = norm(r1)
+    rhat2 = norm(r2)
+    rhat3 = norm(r3)
+    rhat4 = norm(r4)
+
+    rhat5 = norm(r5)
+    rhat6 = norm(r6)
+    rhat7 = norm(r7)
+    rhat8 = norm(r8)
+    
+    E1 = (oofpez * q1 / mag2(r1)) * rhat1
+    E2 = (oofpez * q2 / mag2(r2)) * rhat2
+    E3 = (oofpez * q3 / mag2(r3)) * rhat3
+    E4 = (oofpez * q4 / mag2(r4)) * rhat4
+    Enet1 = E1 + E2 + E3 + E4
+
+    E5 = (oofpez * q1 / mag2(r5)) * rhat5
+    E6 = (oofpez * q2 / mag2(r6)) * rhat6
+    E7 = (oofpez * q3 / mag2(r7)) * rhat7
+    E8 = (oofpez * q4 / mag2(r8)) * rhat8
+    Enet2 = E5 + E6 + E7 + E8
+
+    
+    arrow(pos = r_obs1, axis = Enet1 * scalefactor, color = color.orange)   ##xy
+    arrow(pos = r_obs2, axis = Enet2 * scalefactor, color = color.orange)   ##yz
+    theta = theta + dtheta

@@ -1,0 +1,40 @@
+##Benjamin Linam Hunter Paisley
+##Just one arrow
+
+from __future__ import division, print_function
+from visual import *
+scene.width = scene.height = 800
+## constants
+oofpez = 9e9 # stands for One Over Four Pi Epsilon-Zero
+qe = 1.6e-19
+s = 4e-11
+
+pos1 = vector(0,s/2,0)
+
+pos2 = vector(0,-s/2,0)
+
+scalefactor = 1.5e-20 # you may need to change this
+p1 = sphere(pos=pos1, radius=1e-11, color=color.red)
+q1 = qe
+p2 = sphere(pos=pos2, radius=1e-11, color=color.blue)
+q2 = -qe
+obs = vector(0,-3e-10,0)
+
+r1 = obs - vector(0, s/2,0)
+r2 = obs - vector(0, -s/2,0)
+
+rhat1 = norm(r1)
+rhat2 = norm(r2)
+
+E1 = (oofpez * q1 / mag2(r1)) * rhat1
+
+E2 = (oofpez * q2 / mag2(r2)) * rhat2
+
+Enet = E1 + E2
+
+arrow(pos = obs, axis = Enet * scalefactor, color = color.orange)
+    
+
+print (E1)
+print (E2)
+print (Enet)
